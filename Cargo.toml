@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
-[dependencies]  //These dependencies will be used for building our backend server and communicating with the YouTube API
+[dependencies]   # These dependencies will be used for building our backend server and communicating with the YouTube API
 rocket = "0.5.0-rc.1"
 reqwest = { version = "0.11", features = ["json"] }
 serde = { version = "1.0", features = ["derive"] }
