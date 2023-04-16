@@ -2,34 +2,35 @@ import { useState } from 'react';
 import './App.css';
 
 
-
 function App() {
   const [username, setUsername] = useState('');
-  const [userInfo, setUserInfo] = useState(null);
-  
+  const [response, setResponse] = useState('');
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await fetch(`http://localhost:8000/channel?username=${username}`);
-    const data = await response.json();
-    setUserInfo(data);
-
+    const res = await fetch(`/channel/${username}`);
+    if (res.ok) {
+      const text = await res.text();
+      setResponse(text);
+    } else {
+      setResponse('Error retrieving channel information');
+    }
   };
-  
+
   return (
     <div className="card">
-      <form onSubmit={handleSubmit}>
-        <h1>Youtube User Login</h1>
+    <form onSubmit={handleSubmit}>
+      <h1>Youtube User Login</h1>
         <label>
           Enter a YouTube username:
-          <input type="text" value={username} onChange={(event) => setUsername(event.target.value)} />
+          <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
         </label>
         <button type="submit">Submit</button>
       </form>
-      {userInfo && (
+      {response && (
         <div>
-          <h2>{userInfo.username}</h2>
-          <p>{userInfo.description}</p>
-          <img src={userInfo.profile_picture} alt={`${userInfo.username}'s profile`} />
+          <h2>Channel Information:</h2>
+          <pre>{response}</pre>
         </div>
       )}
     </div>
@@ -37,3 +38,4 @@ function App() {
 }
 
 export default App;
+
